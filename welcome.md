@@ -1,4 +1,3 @@
-Welcome to SPCE5025 - Fundamentals of Astronautics
 Welcome to SPCE5025 - Fundamentals of Astronautics. 
  
 Live, on-line classes begin on Tuesday, 20 January 2026 at 7:00 pm Mountain Time, and will occur every Tuesday at 7:00 pm Mountain Time.   If you cannot attend in person, all on-line sessions are recorded and made available for later reference.
