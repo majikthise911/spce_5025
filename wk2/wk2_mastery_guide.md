@@ -16,6 +16,7 @@ We know:
 But **true anomaly changes with time** as the satellite moves!
 
 **Key insight:** Angular momentum is constant, but velocity is not. Therefore, the angular rate $\dot{\nu}$ is not constant:
+
 $$h = r^2\dot{\nu} = \text{constant}$$
 
 When $r$ is small (near periapsis), $\dot{\nu}$ is large (satellite moves fast).
@@ -66,11 +67,16 @@ Imagine projecting an elliptical orbit onto a circular screen. The eccentric ano
 ### Geometric Relationships
 *(Class 2, Page 9)*
 
-For a circle: $\frac{x^2}{a^2} + \frac{y^2}{a^2} = 1 \Rightarrow y_{circle} = \sqrt{a^2 - x^2}$
+For a circle:
 
-For an ellipse: $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1 \Rightarrow y_{ellipse} = \frac{b}{a}\sqrt{a^2 - x^2}$
+$$\frac{x^2}{a^2} + \frac{y^2}{a^2} = 1 \Rightarrow y_{circle} = \sqrt{a^2 - x^2}$$
+
+For an ellipse:
+
+$$\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1 \Rightarrow y_{ellipse} = \frac{b}{a}\sqrt{a^2 - x^2}$$
 
 Therefore:
+
 $$y_{ellipse} = \frac{b}{a}y_{circle}$$
 
 Any vertical distance on the ellipse is scaled by $b/a$ relative to the circle.
@@ -98,9 +104,11 @@ Relate eccentric anomaly $E$ to time elapsed from periapsis.
 - Area: $A_2 = \frac{1}{2}(ae - a\cos E)(b\sin E) = \frac{ab}{2}(e\sin E - \sin E \cos E)$
 
 **Step 4:** Scale the circle area by $b/a$:
+
 $$A_{PCB} = \frac{b}{a}\left(\frac{a^2 E}{2} - \frac{a^2}{2}\sin E \cos E\right) = \frac{ab E}{2} - \frac{ab}{2}\sin E \cos E$$
 
 **Step 5:** The elliptical sector area is:
+
 $$A_1 = A_{PCB} - A_2$$
 
 $$A_1 = \frac{ab E}{2} - \frac{ab}{2}\sin E \cos E - \frac{ab}{2}(e\sin E - \sin E \cos E)$$
@@ -113,9 +121,11 @@ $$\boxed{A_1 = \frac{ab}{2}(E - e\sin E)}$$
 *(Class 2, Page 14)*
 
 From Kepler's Second Law:
+
 $$\frac{\Delta t}{A_1} = \frac{T_P}{\pi ab}$$
 
 Substituting our area formula:
+
 $$\frac{\Delta t}{\frac{ab}{2}(E - e\sin E)} = \frac{T_P}{\pi ab}$$
 
 $$\Delta t = \frac{T_P}{2\pi}(E - e\sin E)$$
@@ -128,12 +138,15 @@ $$\Delta t = \sqrt{\frac{a^3}{\mu}}(E - e\sin E)$$
 *(Class 2, Page 15)*
 
 Define the **mean motion**:
+
 $$n = \sqrt{\frac{\mu}{a^3}} = \frac{2\pi}{T_P}$$
 
 Define the **mean anomaly**:
+
 $$M = E - e\sin E$$
 
 ### Kepler's Equation
+
 $$\boxed{M = E - e\sin E}$$
 
 $$\boxed{n(t - T) = M}$$
@@ -151,14 +164,16 @@ where $T$ is the time of periapsis passage.
 
 **For cosine:**
 From the auxiliary circle geometry:
+
 $$a\cos E = ae + r\cos\nu$$
 
 where $ae$ is the distance from ellipse center to focus.
 
 Solving:
+
 $$\cos E = e + \frac{r\cos\nu}{a}$$
 
-Using $r = \frac{a(1-e^2)}{1 + e\cos\nu}$:
+Using the ellipse equation $r = \frac{a(1-e^2)}{1 + e\cos\nu}$:
 
 $$\cos E = e + \frac{a(1-e^2)\cos\nu}{a(1 + e\cos\nu)} = e + \frac{(1-e^2)\cos\nu}{1 + e\cos\nu}$$
 
@@ -174,12 +189,15 @@ From $b\sin E = r\sin\nu$ and $b = a\sqrt{1-e^2}$:
 $$\boxed{\sin E = \frac{\sin\nu\sqrt{1-e^2}}{1 + e\cos\nu}}$$
 
 **Inverse relationships:**
+
 $$\cos\nu = \frac{e - \cos E}{e\cos E - 1} = \frac{\cos E - e}{1 - e\cos E}$$
 
 $$\sin\nu = \frac{\sin E\sqrt{1-e^2}}{1 - e\cos E}$$
 
 **Using atan2:**
+
 $$E = \text{atan2}(\sin E, \cos E)$$
+
 $$\nu = \text{atan2}(\sin\nu, \cos\nu)$$
 
 ### Direct Computation from Vectors
@@ -199,6 +217,7 @@ $$E = \text{atan2}(N_E, D_E)$$
 
 ### The Problem
 Given mean anomaly $M$, find eccentric anomaly $E$ from:
+
 $$M = E - e\sin E$$
 
 This is a **transcendental equation**—no closed-form solution exists!
@@ -207,6 +226,7 @@ This is a **transcendental equation**—no closed-form solution exists!
 *(Class 2, Pages 21-22)*
 
 The general Newton-Raphson iteration formula:
+
 $$x_{n+1} = x_n - \frac{f(x)}{f'(x)}$$
 
 **For Kepler's equation:**
@@ -218,6 +238,7 @@ We want $f(E) = 0$.
 Derivative: $f'(E) = -1 + e\cos E$
 
 **Iteration formula:**
+
 $$\boxed{E_{k+1} = E_k + \frac{M - E_k + e\sin E_k}{1 - e\cos E_k}}$$
 
 **Starting value:** $E_0 = M$ usually works well.
@@ -230,13 +251,17 @@ $$\boxed{E_{k+1} = E_k + \frac{M - E_k + e\sin E_k}{1 - e\cos E_k}}$$
 **Find:** Eccentric anomaly $E$
 
 **Iteration 1:**
+
 $$E_0 = 1.0$$
+
 $$E_1 = 1.0 + \frac{1.0 - 1.0 + 0.5\sin(1.0)}{1 - 0.5\cos(1.0)} = 1.0 + \frac{0.4207}{0.7298} = 1.577$$
 
 **Iteration 2:**
+
 $$E_2 = 1.577 + \frac{1.0 - 1.577 + 0.5\sin(1.577)}{1 - 0.5\cos(1.577)} = 1.577 + \frac{-0.0769}{0.9998} = 1.500$$
 
 **Iteration 3:**
+
 $$E_3 = 1.500 + \frac{1.0 - 1.500 + 0.5\sin(1.500)}{1 - 0.5\cos(1.500)} = 1.500 + \frac{-0.0013}{0.9646} = 1.499$$
 
 **Converged:** $E \approx 1.499$ radians
@@ -245,15 +270,19 @@ $$E_3 = 1.500 + \frac{1.0 - 1.500 + 0.5\sin(1.500)}{1 - 0.5\cos(1.500)} = 1.500 
 *(Class 2, Page 23)*
 
 Rewrite Kepler's equation as:
+
 $$E = M + e\sin E$$
 
 Take sine of both sides:
+
 $$\sin E = \sin(M + e\sin E)$$
 
 Let $x = \sin E$:
+
 $$x_{i+1} = \sin(M + ex_i)$$
 
 Iterate until convergence, then:
+
 $$E = \sin^{-1}(x_{final})$$
 
 ---
@@ -273,11 +302,13 @@ $$t - t_0 = k \cdot T_P + \frac{1}{n}(M - M_0)$$
 *(Class 2, Pages 24-26)*
 
 **Function to solve:**
+
 $$f(E_k) = n\Delta t + M_0 - E_k + e\sin E_k$$
 
 where $M_0 = E_0 - e\sin E_0$ is the initial mean anomaly (fixed).
 
 **Iteration formula:**
+
 $$E_{k+1} = E_k + \frac{n\Delta t + M_0 - E_k + e\sin E_k}{1 - e\cos E_k}$$
 
 **Notes:**
@@ -286,7 +317,7 @@ $$E_{k+1} = E_k + \frac{n\Delta t + M_0 - E_k + e\sin E_k}{1 - e\cos E_k}$$
 
 ---
 
-## Topic 21: The f&g Functions — Analytical Orbit Prediction
+## Topic 21: The f and g Functions — Analytical Orbit Prediction
 
 ### Motivation
 *(Class 2, Pages 28-29, 42)*
@@ -294,6 +325,7 @@ $$E_{k+1} = E_k + \frac{n\Delta t + M_0 - E_k + e\sin E_k}{1 - e\cos E_k}$$
 Since orbital elements are constant, position and velocity at any time can be expressed as linear combinations of initial position and velocity:
 
 $$\vec{r} = f\vec{r}_0 + g\dot{\vec{r}}_0$$
+
 $$\dot{\vec{r}} = \dot{f}\vec{r}_0 + \dot{g}\dot{\vec{r}}_0$$
 
 where $f$, $g$, $\dot{f}$, $\dot{g}$ are scalar functions that depend on the change in true anomaly $\Delta\nu$.
@@ -307,7 +339,9 @@ Work in the orbital plane with coordinates:
 - $\hat{W}$ normal to orbital plane (parallel to $\vec{h}$)
 
 Position and velocity:
+
 $$\vec{r} = x\hat{P} + y\hat{Q} + 0\hat{W}$$
+
 $$\dot{\vec{r}} = \dot{x}\hat{P} + \dot{y}\hat{Q} + 0\hat{W}$$
 
 where $\hat{P}$, $\hat{Q}$, $\hat{W}$ are fixed (inertial).
@@ -316,17 +350,21 @@ where $\hat{P}$, $\hat{Q}$, $\hat{W}$ are fixed (inertial).
 *(Class 2, Pages 30-32)*
 
 **Finding f:** Cross $\vec{r}$ with $\dot{\vec{r}}_0$:
+
 $$\vec{r} \times \dot{\vec{r}}_0 = f(\vec{r}_0 \times \dot{\vec{r}}_0) + g(\dot{\vec{r}}_0 \times \dot{\vec{r}}_0)$$
 
 The second term is zero. The first term equals $f\vec{h}$:
+
 $$\vec{r} \times \dot{\vec{r}}_0 = f\vec{h}$$
 
 In components:
+
 $$x\dot{y}_0 - \dot{x}_0 y = fh$$
 
 $$f = \frac{x\dot{y}_0 - \dot{x}_0 y}{h}$$
 
 **Finding g:** Cross $\vec{r}_0$ with $\vec{r}$:
+
 $$\vec{r}_0 \times \vec{r} = g(\vec{r}_0 \times \dot{\vec{r}}_0) = g\vec{h}$$
 
 $$g = \frac{x_0 y - x y_0}{h}$$
@@ -335,15 +373,20 @@ $$g = \frac{x_0 y - x y_0}{h}$$
 *(Class 2, Pages 34-38)*
 
 **Position:**
-$$x = r\cos\nu, \quad y = r\sin\nu$$
+
+$$x = r\cos\nu$$
+
+$$y = r\sin\nu$$
 
 **Velocity:**
+
 $$\dot{x} = -\sqrt{\frac{\mu}{p}}\sin\nu$$
+
 $$\dot{y} = \sqrt{\frac{\mu}{p}}(e + \cos\nu)$$
 
 where $p = a(1-e^2) = h^2/\mu$.
 
-### The f&g Function Formulas
+### The f and g Function Formulas
 *(Class 2, Pages 39-41)*
 
 After substitution and simplification:
@@ -357,11 +400,12 @@ $$\boxed{\dot{g} = 1 - \frac{r_0}{p}(1 - \cos\Delta\nu)}$$
 $$\boxed{\dot{f} = \sqrt{\frac{\mu}{p}}\tan\frac{\Delta\nu}{2}\left(\frac{1-\cos\Delta\nu}{p} - \frac{1}{r} - \frac{1}{r_0}\right)}$$
 
 **Important identity:**
+
 $$f\dot{g} - \dot{f}g = 1$$
 
 This can be used to verify calculations or derive one function from the others.
 
-### Why Use f&g Functions?
+### Why Use f and g Functions?
 *(Class 2, Page 42)*
 
 Applications include:
@@ -369,7 +413,7 @@ Applications include:
 2. Initial orbit determination from observations
 3. Lambert targeting for rendezvous operations
 4. Analytic state transition matrices for orbit determination
-5. Universal variable formulations for all conic sections
+5. Universal variable formulation generalizes to all conic sections
 
 ---
 
@@ -389,29 +433,36 @@ Applications include:
 **Step 1: Convert true anomaly to eccentric anomaly**
 
 For $\nu_0 = 30°$:
+
 $$\cos E_0 = \frac{0.15 + \cos 30°}{1 + 0.15\cos 30°} = \frac{0.15 + 0.866}{1 + 0.130} = \frac{1.016}{1.130} = 0.899$$
 
 $$\sin E_0 = \frac{\sin 30° \sqrt{1-0.15^2}}{1 + 0.15\cos 30°} = \frac{0.5 \times 0.989}{1.130} = 0.437$$
 
-$$E_0 = \text{atan2}(0.437, 0.899) = 25.9° = 0.452$$ rad
+$$E_0 = \text{atan2}(0.437, 0.899) = 25.9° = 0.452 \text{ rad}$$
 
 For $\nu = 120°$:
+
 $$\cos E = \frac{0.15 + \cos 120°}{1 + 0.15\cos 120°} = \frac{0.15 - 0.5}{1 - 0.075} = \frac{-0.35}{0.925} = -0.378$$
 
 $$\sin E = \frac{\sin 120° \sqrt{0.9775}}{0.925} = \frac{0.866 \times 0.989}{0.925} = 0.926$$
 
-$$E = \text{atan2}(0.926, -0.378) = 112.2° = 1.959$$ rad
+$$E = \text{atan2}(0.926, -0.378) = 112.2° = 1.959 \text{ rad}$$
 
 **Step 2: Calculate mean anomalies**
-$$M_0 = E_0 - e\sin E_0 = 0.452 - 0.15(0.437) = 0.387$$ rad
 
-$$M = E - e\sin E = 1.959 - 0.15(0.926) = 1.820$$ rad
+$$M_0 = E_0 - e\sin E_0 = 0.452 - 0.15(0.437) = 0.387 \text{ rad}$$
+
+$$M = E - e\sin E = 1.959 - 0.15(0.926) = 1.820 \text{ rad}$$
 
 **Step 3: Calculate mean motion**
-$$n = \sqrt{\frac{\mu}{a^3}} = \sqrt{\frac{3.986 \times 10^5}{8000^3}} = \sqrt{\frac{3.986 \times 10^5}{5.12 \times 10^{11}}} = 8.82 \times 10^{-4}$$ rad/s
+
+$$n = \sqrt{\frac{\mu}{a^3}} = \sqrt{\frac{3.986 \times 10^5}{8000^3}} = \sqrt{\frac{3.986 \times 10^5}{5.12 \times 10^{11}}} = 8.82 \times 10^{-4} \text{ rad/s}$$
 
 **Step 4: Time of flight**
-$$\Delta t = \frac{M - M_0}{n} = \frac{1.820 - 0.387}{8.82 \times 10^{-4}} = 1624$$ seconds $\approx 27.1$ minutes
+
+$$\Delta t = \frac{M - M_0}{n} = \frac{1.820 - 0.387}{8.82 \times 10^{-4}} = 1624 \text{ s}$$
+
+This is approximately 27.1 minutes.
 
 ### Example 2: Solving Kepler's Equation
 
@@ -422,28 +473,30 @@ $$\Delta t = \frac{M - M_0}{n} = \frac{1.820 - 0.387}{8.82 \times 10^{-4}} = 162
 **Solution:**
 
 **Step 1: Calculate mean motion and mean anomaly**
-$$n = \sqrt{\frac{3.986 \times 10^5}{10000^3}} = 6.31 \times 10^{-4}$$ rad/s
 
-$$M = n\Delta t = 6.31 \times 10^{-4} \times 3600 = 2.27$$ rad
+$$n = \sqrt{\frac{3.986 \times 10^5}{10000^3}} = 6.31 \times 10^{-4} \text{ rad/s}$$
+
+$$M = n\Delta t = 6.31 \times 10^{-4} \times 3600 = 2.27 \text{ rad}$$
 
 **Step 2: Solve Kepler's equation by iteration**
 
-$E_0 = M = 2.27$
+Starting with $E_0 = M = 2.27$:
 
-$E_1 = 2.27 + \frac{2.27 - 2.27 + 0.3\sin(2.27)}{1 - 0.3\cos(2.27)} = 2.27 + \frac{0.229}{1.188} = 2.46$
+$$E_1 = 2.27 + \frac{2.27 - 2.27 + 0.3\sin(2.27)}{1 - 0.3\cos(2.27)} = 2.27 + \frac{0.229}{1.188} = 2.46$$
 
-$E_2 = 2.46 + \frac{2.27 - 2.46 + 0.3\sin(2.46)}{1 - 0.3\cos(2.46)} = 2.46 + \frac{-0.005}{1.235} = 2.456$
+$$E_2 = 2.46 + \frac{2.27 - 2.46 + 0.3\sin(2.46)}{1 - 0.3\cos(2.46)} = 2.46 + \frac{-0.005}{1.235} = 2.456$$
 
 Converged: $E \approx 2.456$ rad $= 140.7°$
 
 **Step 3: Convert to true anomaly**
+
 $$\cos\nu = \frac{\cos E - e}{1 - e\cos E} = \frac{-0.760 - 0.3}{1 - 0.3(-0.760)} = \frac{-1.060}{1.228} = -0.863$$
 
 $$\sin\nu = \frac{\sin E\sqrt{1-e^2}}{1 - e\cos E} = \frac{0.650 \times 0.954}{1.228} = 0.505$$
 
 $$\nu = \text{atan2}(0.505, -0.863) = 149.7°$$
 
-### Example 3: f&g Prediction
+### Example 3: f and g Prediction
 
 **Given:** Initial state in perifocal frame:
 - $\vec{r}_0 = (7000, 0)$ km
@@ -454,29 +507,38 @@ $$\nu = \text{atan2}(0.505, -0.863) = 149.7°$$
 **Solution:**
 
 **Step 1: Calculate orbital parameters**
-$$h = r_0 v_0 = 7000 \times 8.0 = 56000$$ km²/s
 
-$$p = \frac{h^2}{\mu} = \frac{56000^2}{398600} = 7870$$ km
+$$h = r_0 v_0 = 7000 \times 8.0 = 56000 \text{ km}^2/\text{s}$$
 
-$$r_0 = 7000$$ km (at periapsis, so $\nu_0 = 0°$)
+$$p = \frac{h^2}{\mu} = \frac{56000^2}{398600} = 7870 \text{ km}$$
 
-**Step 2: Find r at $\nu = 60°$**
-From trajectory equation: at periapsis, $r_p = a(1-e)$, and $p = a(1-e^2)$
+Note that $r_0 = 7000$ km (at periapsis, so $\nu_0 = 0°$).
+
+**Step 2: Find r at the new true anomaly**
+
+First find eccentricity. At periapsis, $r_p = a(1-e)$, and $p = a(1-e^2)$:
+
 $$\frac{p}{r_p} = \frac{a(1-e^2)}{a(1-e)} = 1+e$$
+
 $$e = \frac{p}{r_0} - 1 = \frac{7870}{7000} - 1 = 0.124$$
 
-$$r = \frac{p}{1 + e\cos\nu} = \frac{7870}{1 + 0.124\cos 60°} = \frac{7870}{1.062} = 7410$$ km
+Now find $r$ at $\nu = 60°$:
 
-**Step 3: Calculate f&g functions**
+$$r = \frac{p}{1 + e\cos\nu} = \frac{7870}{1 + 0.124\cos 60°} = \frac{7870}{1.062} = 7410 \text{ km}$$
+
+**Step 3: Calculate f and g functions**
+
 $$f = 1 - \frac{r}{p}(1 - \cos 60°) = 1 - \frac{7410}{7870}(1 - 0.5) = 1 - 0.471 = 0.529$$
 
-$$g = \frac{rr_0}{\sqrt{\mu p}}\sin 60° = \frac{7410 \times 7000}{\sqrt{398600 \times 7870}} \times 0.866 = \frac{51.87 \times 10^6}{56012} \times 0.866 = 802$$ s
+$$g = \frac{rr_0}{\sqrt{\mu p}}\sin 60° = \frac{7410 \times 7000}{\sqrt{398600 \times 7870}} \times 0.866$$
+
+$$g = \frac{51.87 \times 10^6}{56012} \times 0.866 = 802 \text{ s}$$
 
 **Step 4: New position**
-$$\vec{r} = f\vec{r}_0 + g\dot{\vec{r}}_0 = 0.529(7000, 0) + 802(0, 8.0)$$
-$$\vec{r} = (3703, 6416)$$ km
 
-Check: $|\vec{r}| = \sqrt{3703^2 + 6416^2} = 7408$ km ✓
+$$\vec{r} = f\vec{r}_0 + g\dot{\vec{r}}_0 = 0.529(7000, 0) + 802(0, 8.0) = (3703, 6416) \text{ km}$$
+
+Check: $|\vec{r}| = \sqrt{3703^2 + 6416^2} = 7408$ km (matches expected value)
 
 ---
 
@@ -509,33 +571,38 @@ d) $T_P = 13095$ s = 218.3 min
 
 **Find:** Position and velocity after $\Delta\nu = 90°$
 
-**Hint:** First calculate $h$, $p$, $r_0$, then use f&g formulas.
+**Hint:** First calculate $h$, $p$, $r_0$, then use f and g formulas.
 
 ---
 
 ## Common Misconceptions
 
-### Misconception 1: $\dot{r} = |\dot{\vec{r}}|$
-**Wrong:** The rate of change of position magnitude equals the speed.
+### Misconception 1: The rate of change of position magnitude equals speed
+
+**Wrong:** $\dot{r} = |\dot{\vec{r}}|$
 
 **Correct:** $\dot{r} = \frac{d}{dt}|\vec{r}|$ is the radial velocity component. Speed is $v = |\dot{\vec{r}}|$. They're only equal when velocity is purely radial.
 
-### Misconception 2: Mean anomaly is an angle you can measure
+### Misconception 2: Mean anomaly is a physical angle
+
 **Wrong:** Mean anomaly corresponds to some physical angle on the orbit.
 
 **Correct:** Mean anomaly $M$ is a mathematical convenience—it's the angle a fictitious satellite would sweep if moving at constant angular rate. It has no direct geometric interpretation on the actual orbit.
 
 ### Misconception 3: Eccentric anomaly is measured at the focus
+
 **Wrong:** $E$ is measured from the central body.
 
 **Correct:** Eccentric anomaly is measured at the *center* of the ellipse, while true anomaly is measured at the *focus* where the central body sits.
 
 ### Misconception 4: Higher eccentricity means more energy
+
 **Wrong:** Changing eccentricity changes orbital energy.
 
 **Correct:** Energy depends only on semi-major axis ($\xi = -\mu/2a$). Two orbits can have the same $a$ but different $e$, yet identical energy.
 
 ### Misconception 5: ATAN2 and ATAN are interchangeable
+
 **Wrong:** Both give the same result for inverse tangent.
 
 **Correct:** ATAN returns angles only in $(-90°, 90°)$. ATAN2(y,x) returns angles in $(-180°, 180°)$, correctly handling all four quadrants. Always use ATAN2 for orbital calculations.
@@ -553,31 +620,31 @@ flowchart TD
     end
     
     subgraph "Constants of Motion"
-    B[Angular Momentum h = r × v]
-    C[Energy ξ = v²/2 - μ/r]
+    B[Angular Momentum h]
+    C[Energy xi]
     D[Eccentricity Vector e]
     end
     
     subgraph "Orbital Elements"
-    E[a = -μ/2ξ]
-    F[e = magnitude of e]
-    G[i = cos⁻¹ Ẑ·ĥ]
-    H[Ω = atan2 Ny Nx]
-    I[ω = angle N to e]
-    J[ν = angle e to r]
+    E[Semi-major axis a]
+    F[Eccentricity e]
+    G[Inclination i]
+    H[RAAN Omega]
+    I[Argument of periapsis omega]
+    J[True anomaly nu]
     end
     
     subgraph "Time Relationships"
-    K[E from ν]
-    L[M = E - e sin E]
-    M[n = √μ/a³]
-    N[t - T = M/n]
+    K[Eccentric Anomaly E]
+    L[Mean Anomaly M]
+    M2[Mean Motion n]
+    N[Time since periapsis]
     end
     
     subgraph "Prediction"
-    O[Given Δt, solve for E]
-    P[Convert E to ν]
-    Q[f&g functions]
+    O[Given delta t solve for E]
+    P[Convert E to nu]
+    Q[f and g functions]
     R[New r and v]
     end
     
@@ -593,7 +660,7 @@ flowchart TD
     
     J --> K
     K --> L
-    E --> M
+    E --> M2
     L --> N
     
     N --> O
@@ -604,7 +671,7 @@ flowchart TD
 
 ### The Workflow for Orbit Determination
 
-1. **From $\vec{r}$ and $\vec{v}$, compute:**
+1. **From position and velocity, compute:**
    - $\vec{h} = \vec{r} \times \vec{v}$
    - $\xi = v^2/2 - \mu/r$
    - $\vec{e} = (v^2 - \mu/r)\vec{r}/\mu - (\vec{r}\cdot\vec{v})\vec{v}/\mu$
@@ -625,17 +692,17 @@ flowchart TD
 
 4. **For prediction:**
    - Given $\Delta t$, find new $M$, solve for $E$, convert to $\nu$
-   - Or use f&g functions with $\Delta\nu$
+   - Or use f and g functions with $\Delta\nu$
 
 ---
 
 ## Glossary
 
-**Angular Momentum ($\vec{h}$):** Vector quantity $\vec{r} \times \vec{v}$ that is conserved in two-body motion; perpendicular to the orbital plane.
+**Angular Momentum (h):** Vector quantity $\vec{r} \times \vec{v}$ that is conserved in two-body motion; perpendicular to the orbital plane.
 
 **Apoapsis:** The point in an orbit farthest from the central body. For Earth orbits, called apogee.
 
-**Argument of Periapsis ($\omega_p$):** Angle in the orbital plane from the ascending node to periapsis.
+**Argument of Periapsis (omega_p):** Angle in the orbital plane from the ascending node to periapsis.
 
 **ATAN2:** Two-argument arctangent function that returns angles in the correct quadrant; atan2(y,x) gives the angle whose tangent is y/x.
 
@@ -643,21 +710,21 @@ flowchart TD
 
 **Conic Section:** Curve formed by intersecting a cone with a plane; includes circles, ellipses, parabolas, and hyperbolas.
 
-**Eccentric Anomaly ($E$):** Angle measured at the ellipse center, related to position on the auxiliary circle.
+**Eccentric Anomaly (E):** Angle measured at the ellipse center, related to position on the auxiliary circle.
 
-**Eccentricity ($e$):** Measure of orbit shape; $e=0$ is circular, $0<e<1$ is elliptical, $e=1$ is parabolic, $e>1$ is hyperbolic.
+**Eccentricity (e):** Measure of orbit shape; $e=0$ is circular, $0<e<1$ is elliptical, $e=1$ is parabolic, $e>1$ is hyperbolic.
 
-**Eccentricity Vector ($\vec{e}$):** Vector pointing toward periapsis with magnitude equal to eccentricity.
+**Eccentricity Vector (e):** Vector pointing toward periapsis with magnitude equal to eccentricity.
 
 **Epoch:** A reference time for orbital elements.
 
-**f&g Functions:** Scalar functions that relate position and velocity at one time to position and velocity at another time.
+**f and g Functions:** Scalar functions that relate position and velocity at one time to position and velocity at another time.
 
-**Flight Path Angle ($\phi$):** Angle between velocity vector and local horizontal.
+**Flight Path Angle (phi):** Angle between velocity vector and local horizontal.
 
-**Gravitational Parameter ($\mu$):** Product $GM$ for a central body; for Earth, $\mu_\oplus = 3.986004418 \times 10^{14}$ m³/s².
+**Gravitational Parameter (mu):** Product $GM$ for a central body; for Earth, $\mu_\oplus = 3.986004418 \times 10^{14}$ m³/s².
 
-**Inclination ($i$):** Angle between the orbital plane and the equatorial plane.
+**Inclination (i):** Angle between the orbital plane and the equatorial plane.
 
 **Inertial Reference Frame:** Coordinate system with axes fixed in space (not rotating).
 
@@ -665,33 +732,33 @@ flowchart TD
 
 **Line of Nodes:** Intersection of orbital plane with equatorial plane.
 
-**Mean Anomaly ($M$):** Angle that would be swept by a satellite moving at constant angular rate; $M = n(t-T)$.
+**Mean Anomaly (M):** Angle that would be swept by a satellite moving at constant angular rate; $M = n(t-T)$.
 
-**Mean Motion ($n$):** Angular rate for mean anomaly; $n = \sqrt{\mu/a^3} = 2\pi/T_P$.
+**Mean Motion (n):** Angular rate for mean anomaly; $n = \sqrt{\mu/a^3} = 2\pi/T_P$.
 
 **Newton-Raphson Method:** Iterative numerical technique for finding roots of equations.
 
-**Node Vector ($\hat{N}$):** Unit vector pointing toward the ascending node.
+**Node Vector (N):** Unit vector pointing toward the ascending node.
 
 **Orbital Elements:** Set of six parameters (e.g., $a$, $e$, $i$, $\Omega$, $\omega$, $\nu$) that uniquely define an orbit.
 
-**Orbital Period ($T_P$):** Time for one complete orbit; $T_P = 2\pi\sqrt{a^3/\mu}$.
+**Orbital Period (T_P):** Time for one complete orbit; $T_P = 2\pi\sqrt{a^3/\mu}$.
 
 **Periapsis:** Point in orbit closest to central body. For Earth orbits, called perigee.
 
 **Perifocal Frame:** Coordinate system with $\hat{P}$ toward periapsis, $\hat{Q}$ in direction of motion, $\hat{W}$ normal to orbit.
 
-**RAAN (Right Ascension of Ascending Node, $\Omega$):** Angle from reference direction to ascending node, measured in equatorial plane.
+**RAAN (Right Ascension of Ascending Node, Omega):** Angle from reference direction to ascending node, measured in equatorial plane.
 
-**Semi-latus Rectum ($p$):** Orbital parameter; $p = h^2/\mu = a(1-e^2)$.
+**Semi-latus Rectum (p):** Orbital parameter; $p = h^2/\mu = a(1-e^2)$.
 
-**Semi-major Axis ($a$):** Half the longest diameter of an ellipse; determines orbit size and period.
+**Semi-major Axis (a):** Half the longest diameter of an ellipse; determines orbit size and period.
 
-**Semi-minor Axis ($b$):** Half the shortest diameter; $b = a\sqrt{1-e^2}$.
+**Semi-minor Axis (b):** Half the shortest diameter; $b = a\sqrt{1-e^2}$.
 
-**Specific Energy ($\xi$):** Energy per unit mass; $\xi = v^2/2 - \mu/r = -\mu/(2a)$.
+**Specific Energy (xi):** Energy per unit mass; $\xi = v^2/2 - \mu/r = -\mu/(2a)$.
 
-**True Anomaly ($\nu$):** Angle from periapsis to current position, measured at the focus.
+**True Anomaly (nu):** Angle from periapsis to current position, measured at the focus.
 
 **Two-Body Problem:** Idealized problem of two masses interacting only through mutual gravitation.
 
@@ -740,7 +807,7 @@ flowchart TD
 - Verify by computing $\nu$ after computed time
 - Find $\nu$ after 2700 s, 2 periods, and 15000 s
 
-**Part 2:** f&g function application
+**Part 2:** f and g function application
 - Compute Keplerian elements
 - Find perifocal $\vec{r}_0$ and $\vec{v}_0$
 - Compute $f$, $g$, $\dot{f}$, $\dot{g}$ for $\Delta\nu = 33°$
@@ -748,4 +815,8 @@ flowchart TD
 
 **Part 3:** Derivations
 1. Express orbit speed $v$ as function of $\nu$
-2. Prove: $v_{perigee} = \sqrt{\frac{\mu}{a}\frac{1+e}{1-e}}$ and $v_{apogee} = \sqrt{\frac{\mu}{a}\frac{1-e}{1+e}}$
+2. Prove the perigee and apogee velocity formulas:
+
+$$v_{perigee} = \sqrt{\frac{\mu}{a}\frac{1+e}{1-e}}$$
+
+$$v_{apogee} = \sqrt{\frac{\mu}{a}\frac{1-e}{1+e}}$$
